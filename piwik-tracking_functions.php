@@ -47,17 +47,19 @@ function piwiktracking_async_tracking() {
 	$output = '<!-- Piwik Async -->' . "\n";
 	$output .= '<script type="text/javascript">' . "\n";
 	$output .= "\t" . 'var _paq = _paq || []; (function() {' . "\n";
-	$output .= "\t" . 'var u = (("https:" == document.location.protocol) ? "https://' . piwiktracking_get_option( 'piwikurl' ) . '" : "http://' . piwiktracking_get_option( 'piwikurl' ) . '");' . "\n";
+	$output .= "\t" . "var u=('https:' == document.location.protocol ? 'https://' : 'http://') + '" . piwiktracking_get_option( 'piwikurl' ) . "';" . "\n";
 	$output .= "\t" . '_paq.push([\'setSiteId\', ' . piwiktracking_get_option( 'siteid' ) . ']);' . "\n";
 	$output .= "\t" . '_paq.push([\'setTrackerUrl\', u + \'piwik.php\']);' . "\n";
 	$output .= "\t" . '_paq.push([\'trackPageView\']);' . "\n";
-	$output .= "\t" . '_paq.push([\'enableLinkTracking\']);' . "\n";
+	if ( piwiktracking_get_option( 'linktracking' ) )
+		$output .= "\t" . '_paq.push([\'enableLinkTracking\']);' . "\n";
 	$output .= "\t" . 'var d = document, g = d.createElement(\'script\'), s = d.getElementsByTagName(\'script\')[0];' . "\n";
 	$output .= "\t" . 'g.type = \'text/javascript\';' . "\n";
 	$output .= "\t" . 'g.defer = true;' . "\n";
 	$output .= "\t" . 'g.async = true;' . "\n";
 	$output .= "\t" . 'g.src = u + \'piwik.js\';' . "\n";
 	$output .= "\t" . 's.parentNode.insertBefore(g, s);' . "\n";
+	$output .= "\t" . '})();' . "\n";
 	$output .= '</script>' . "\n";
 	$output .= '<!-- End Piwik Code -->' . "\n";
 
@@ -67,14 +69,15 @@ function piwiktracking_async_tracking() {
 function piwiktracking_standard_tracking() {
 	$output = '<!-- Piwik Standard-->' . "\n";
 	$output .= '<script type="text/javascript">' . "\n";
-	$output .= "\t" . 'var pkBaseURL = (("https:" == document.location.protocol) ? "https://' . piwiktracking_get_option( 'piwikurl' ) . '" : "http://' . piwiktracking_get_option( 'piwikurl' ) . '");' . "\n";
+	$output .= "\t" . "var pkBaseURL = (('https:' == document.location.protocol) ? 'https://') + '" . piwiktracking_get_option( 'piwikurl' ) . "';" . "\n";
 	$output .= "\t" . 'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));' . "\n";
 	$output .= '</script>' . "\n";
 	$output .= '<script type="text/javascript">' . "\n";
 	$output .= "\t" . 'try {' . "\n";
 	$output .= "\t\t" . 'var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", ' . piwiktracking_get_option( 'siteid' ) . ');' . "\n";
 	$output .= "\t\t" . 'piwikTracker.trackPageView();' . "\n";
-	$output .= "\t\t" . 'piwikTracker.enableLinkTracking();' . "\n";
+	if ( piwiktracking_get_option( 'linktracking' ) )
+		$output .= "\t\t" . 'piwikTracker.enableLinkTracking();' . "\n";
 	$output .= "\t" . '} catch( err ) {' . "\n";
 	$output .= "\t" . '}' . "\n";
 	$output .= '</script>' . "\n";

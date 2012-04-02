@@ -12,6 +12,10 @@ Add Piwik Tracking Code to your WordPress blog.
 
 A simple plugin to conveniently add the Piwik tracking code to your WordPress posts and pages.
 
+- Choose between the standard javascript tracker and the modern asynchronous tracker (see [Piwik documentation](http://piwik.org/docs/javascript-tracking/ "Piwik documtation") for reference)
+- enable or disable download & outlink tracking
+- advanced settings: select user groups (identified by roles) to exclude from being tracked 
+
 ### Installation
 
 1. Upload the plugin folder to the `/wp-content/plugins/` directory

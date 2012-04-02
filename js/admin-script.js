@@ -5,7 +5,7 @@ jQuery(document).ready(function($) {
     $('.ui-tabs').tabs({
         fx : {
             opacity : 'toggle',
-            duration : 100
+            duration : 80
         },
         show : onSelect,
         cookie : {}
