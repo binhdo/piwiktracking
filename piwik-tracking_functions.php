@@ -18,18 +18,19 @@ function piwiktracking_functions_setup() {
 	/* Insert Piwik Tracking Code */
 	if ( is_user_logged_in( ) ) {
 		$roles_set = piwiktracking_get_option( 'excludedroles' );
-		foreach ( $roles_set as $role => $name ) {
-			if ( current_user_can( $role ) && ! $roles_set[$role] == 1 ) {
-				switch( piwiktracking_get_option( 'trackingmode' ) ) {
-					case 'standard':
-						add_action( 'wp_footer', 'piwiktracking_standard_tracking' );
-						break;
-					case 'async':
-						add_action( 'wp_head', 'piwiktracking_async_tracking' );
-						break;
+		if ( $roles_set )
+			foreach ( $roles_set as $role => $name ) {
+				if ( current_user_can( $role ) && ! $roles_set[$role] == 1 ) {
+					switch( piwiktracking_get_option( 'trackingmode' ) ) {
+						case 'standard':
+							add_action( 'wp_footer', 'piwiktracking_standard_tracking' );
+							break;
+						case 'async':
+							add_action( 'wp_head', 'piwiktracking_async_tracking' );
+							break;
+					}
 				}
 			}
-		}
 	} else {
 		switch (piwiktracking_get_option( 'trackingmode')) {
 			case 'standard':
