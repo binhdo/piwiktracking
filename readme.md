@@ -4,7 +4,7 @@
 - Tags: piwik, tracking
 - Requires at least: 3.3
 - Tested up to: 3.4-nightly
-- Stable tag: 0.1
+- Stable tag: 0.2
 
 Add Piwik Tracking Code to your WordPress blog.
 

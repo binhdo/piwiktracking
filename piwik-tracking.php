@@ -1,10 +1,10 @@
 <?php
 /*
  * Plugin Name: Piwik Tracking
- * Plugin URI: http://wordpress.org
- * Description: A simple wordpress plugin template.
- * Version: 0.1
- * Author: Plugin Author
+ * Plugin URI: http://binaryhideout.com
+ * Description: Adds the Piwik tracking code to your WordPress blog.
+ * Version: 0.2
+ * Author: M. Dobersalsky
  * Author URI: http://binaryhideout.com
  * License: GPLv2 or later
  */
@@ -27,7 +27,7 @@ class PiwikTracking {
         /* Plugin constants */
         define( 'PIWIKTRACKING_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
         define( 'PIWIKTRACKING_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
-        define( 'PIWIKTRACKING_VERSION', '0.1' );
+        define( 'PIWIKTRACKING_VERSION', '0.2' );
 
         /* Include plugin functions */
         require_once (PIWIKTRACKING_DIR . 'piwik-tracking_functions.php');
