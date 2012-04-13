@@ -1,7 +1,7 @@
 /*
  * Piwik Tracking jQuery functions
  */
-jQuery(document).ready(function($) {
+jQuery(function($) {
     $('.ui-tabs').tabs({
         fx : {
             opacity : 'toggle',
