@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Piwiktracking
- * Plugin URI: http://binaryhideout.com
+ * Plugin URI: http://binaryhideout.com/piwiktracking-wordpress-plugin/
  * Description: Adds the Piwik tracking code to your WordPress blog.
  * Version: 1.0
  * Author: M. Dobersalsky

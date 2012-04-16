@@ -1,6 +1,6 @@
 === Piwiktracking ===
 Contributors: binhdo
-Donate link: http://binaryhideout.com/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZM4M7KZUEZML
 Tags: piwik, tracking, analytics, data
 Requires at least: 3.3
 Tested up to: 3.4
