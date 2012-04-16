@@ -97,7 +97,7 @@ function piwiktracking_section_advanced() {
 	$value = true;
 
 	$html .= '<p>' . "\n";
-	$html .= '<label for="select-all">Select / deselect all</label>' . "\n";
+	$html .= '<label for="select-all">' . __( 'Select / deselect all', 'piwiktracking' ) . '</label>' . "\n";
 	$html .= '<input id="select-all" type="checkbox">' . "\n";
 	$html .= '</p>' . "\n";
 
@@ -171,7 +171,7 @@ function piwiktracking_display_settings_page() {
 
 	screen_icon( );
 
-	echo '<h2>Piwiktracking Settings</h2>' . "\n";
+	echo '<h2>' . __( 'Piwiktracking Settings', 'piwiktracking' ) . '</h2>' . "\n";
 
 	settings_errors( );
 
@@ -208,9 +208,7 @@ function piwiktracking_validate_settings($input) {
 
 	$checkbox_options = array( 'linktracking' );
 
-	foreach ( $checkbox_options as $checkbox_option ) {
-		$settings[$checkbox_option] = isset( $input[$checkbox_option] ) ? true : false;
-	}
+	$settings['linktracking'] = isset( $input['linktracking'] ) ? true : false;
 
 	foreach ( $piwiktracking -> roles_available as $role => $name ) {
 		$settings['excludedroles'][$role] = isset( $input['excludedroles'][$role] ) ? true : false;

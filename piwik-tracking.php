@@ -53,6 +53,8 @@ class PiwikTracking {
 			}
 		}
 
+		load_plugin_textdomain( 'piwiktracking', false, PIWIKTRACKING_DIR . 'languages/' );
+
 	}
 
 	function piwiktracking_plugin_action_links($links, $file) {
@@ -76,11 +78,11 @@ class PiwikTracking {
 
 		if ( ! $piwik_url || ! $site_id ) {
 			if ( ! $piwik_url && ! $site_id )
-				$text = 'You need to set your <strong>Piwik URL</strong> and your <strong>Piwik SiteID</strong> on the <a href="options-general.php?page=piwiktracking-settings-page"><strong>Piwiktracking Settings Page</strong></a>.';
+				$text = __( 'Please set your <strong>Piwik URL</strong> and your <strong>Piwik SiteID</strong> on the <a href="options-general.php?page=piwiktracking-settings-page"><strong>Piwiktracking Settings Page</strong></a>.', 'piwiktracking' );
 			if ( $piwik_url && ! $site_id )
-				$text = 'You need to set your <a href="options-general.php?page=piwiktracking-settings-page"><strong>Piwik SiteID</strong></a>.';
+				$text = __( 'Please set your <a href="options-general.php?page=piwiktracking-settings-page"><strong>Piwik SiteID</strong></a>.', 'piwiktracking' );
 			if ( ! $piwik_url && $site_id )
-				$text = 'You need to set your <a href="options-general.php?page=piwiktracking-settings-page"><strong>Piwik URL</strong></a>.';
+				$text = __( 'Please set your <a href="options-general.php?page=piwiktracking-settings-page"><strong>Piwik URL</strong></a>.', 'piwiktracking' );
 			$out = '<div class="updated fade">';
 			$out .= '<p>' . $text . '</p>';
 			$out .= '</div>';
