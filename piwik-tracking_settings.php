@@ -1,6 +1,6 @@
 <?php
 /*
- * Piwik Tracking plugin settings
+ * Piwiktracking plugin settings
  */
 
 add_action( 'admin_menu', 'piwiktracking_settings_page_setup' );
@@ -17,7 +17,7 @@ function piwiktracking_settings_page_setup() {
 	$piwiktracking -> roles_available = $wp_roles -> get_names( );
 
 	/* add_options_page( $page_title, $menu_title, $capability, $menu_slug, $funtion ); */
-	$piwiktracking -> settings_page = add_options_page( 'Piwik Tracking Settings', 'Piwik Tracking', 'manage_options', 'piwiktracking-settings-page', 'piwiktracking_display_settings_page' );
+	$piwiktracking -> settings_page = add_options_page( 'Piwiktracking Settings', 'Piwiktracking', 'manage_options', 'piwiktracking-settings-page', 'piwiktracking_display_settings_page' );
 
 	add_action( 'admin_init', 'piwiktracking_register_settings' );
 
@@ -49,14 +49,14 @@ function piwiktracking_section_basic() {
 	global $piwiktracking;
 
 	$html = '<div id="piwiktracking-settings-basic" class="piwiktracking-section">' . "\n";
-	$html .= '<h3>' . __( 'Piwik Tracking Basic Settings', 'piwiktracking' ) . '</h3>' . "\n";
+	$html .= '<h3>' . __( 'Piwiktracking Basic Settings', 'piwiktracking' ) . '</h3>' . "\n";
 
 	$html .= piwiktracking_create_setting( array(
 		'id' => 'piwikurl',
 		'type' => 'text',
 		'class' => 'regular-text',
-		'label' => __( 'The URL to your Piwik installation', 'piwiktracking' ),
-		'desc' => __( 'the base URL to your Piwik installation (without the http(s)://)', 'piwiktracking' )
+		'label' => __( 'Piwik Base URL', 'piwiktracking' ),
+		'desc' => __( 'the base URL to your Piwik installation (without http(s)://)', 'piwiktracking' )
 	) );
 
 	$html .= piwiktracking_create_setting( array(
@@ -96,7 +96,12 @@ function piwiktracking_section_advanced() {
 	$roles_set = piwiktracking_get_option( 'excludedroles' );
 	$value = true;
 
-	$html .= '<fieldset>' . "\n";
+	$html .= '<p>' . "\n";
+	$html .= '<label for="select-all">Select / deselect all</label>' . "\n";
+	$html .= '<input id="select-all" type="checkbox">' . "\n";
+	$html .= '</p>' . "\n";
+
+	$html .= '<fieldset id="user-roles">' . "\n";
 	foreach ( $piwiktracking->roles_available as $role => $name ) {
 		$html .= '<p>' . "\n";
 		$html .= '<input type="checkbox" id="' . $role . '" name="' . $prefix . '[' . $role . ']" value="' . $value . '"' . checked( $value, $roles_set[$role], false ) . ' >' . "\n";
@@ -166,7 +171,7 @@ function piwiktracking_display_settings_page() {
 
 	screen_icon( );
 
-	echo '<h2>Piwik Tracking Settings</h2>' . "\n";
+	echo '<h2>Piwiktracking Settings</h2>' . "\n";
 
 	settings_errors( );
 
@@ -197,13 +202,9 @@ function piwiktracking_validate_settings($input) {
 
 	global $piwiktracking;
 
-	$settings['piwikurl'] = trailingslashit( preg_replace( "/^https?:\/\/(.+)$/i", "\\1", $input['piwikurl'] ) );
+	$settings['piwikurl'] = empty( $input['piwikurl'] ) ? '' : trailingslashit( preg_replace( "/^https?:\/\/(.+)$/i", "\\1", $input['piwikurl'] ) );
 
-	$integer_options = array( 'siteid' );
-
-	foreach ( $integer_options as $integer_option ) {
-		$settings[$integer_option] = is_numeric( $input[$integer_option] ) ? intval( $input[$integer_option] ) : piwiktracking_get_option( $integer_option );
-	}
+	$settings['siteid'] = is_numeric( $input['siteid'] ) ? intval( $input['siteid'] ) : '';
 
 	$checkbox_options = array( 'linktracking' );
 
@@ -225,15 +226,15 @@ function piwiktracking_validate_settings($input) {
 
 function piwiktracking_admin_scripts() {
 
-	wp_enqueue_script( 'jquery-cookie', PIWIKTRACKING_URI . 'js/jquery.cookie.js', array( 'jquery' ) );
+	//wp_enqueue_script( 'jquery-cookie', PIWIKTRACKING_URI . 'js/jquery.cookie.js', array( 'jquery' ) );
 	wp_print_scripts( 'jquery-ui-tabs' );
-	wp_enqueue_script( 'piwiktracking-admin-functions', PIWIKTRACKING_URI . 'js/admin-script.js', array( 'jquery' ) );
+	wp_enqueue_script( 'piwiktracking-admin-functions', PIWIKTRACKING_URI . 'js/admin-script.js', array( 'jquery' ), '1.0' );
 
 }
 
 function piwiktracking_admin_styles() {
 
-	wp_enqueue_style( 'piwiktracking-style', PIWIKTRACKING_URI . 'css/admin-style.css' );
+	wp_enqueue_style( 'piwiktracking-style', PIWIKTRACKING_URI . 'css/admin-style.css', false, '1.0' );
 
 }
 ?>

@@ -1,14 +1,12 @@
-## Piwik Tracking WordPress Plugin
+## Piwiktracking
 Contributors: binhdo
 Donate link: http://binaryhideout.com/
-Tags: piwik, tracking
+Tags: piwik, tracking, analytics
 Requires at least: 3.3
 Tested up to: 3.4-nightly
-Stable tag: 0.2
+Stable tag: 1.0
 
-Add the Piwik Tracking Code to your WordPress blog.
-
-Please visit [this blog entry](http://binaryhideout.com/piwik-tracking-wordpress-plugin/ "piwik-tracking entry on binaryhideout.com") for further information.
+Adds the Piwik Tracking Code to your WordPress blog.
 
 ## Description
 
@@ -20,7 +18,7 @@ A simple plugin to conveniently add the Piwik tracking code to your WordPress po
 
 Please see [Piwik documentation](http://piwik.org/docs/javascript-tracking/ "Piwik documtation") for detailed reference on Piwik.
 
-Piwik is a Free Software released under the license GPL v3 or later (see GPL v3 guide).
+Piwik is a Free Software released under the license GPL v3 or later (see [GPL v3 guide](http://www.gnu.org/licenses/quick-guide-gplv3.html)).
 
 ## Installation
 
