@@ -29,11 +29,11 @@ class PiwikTracking {
 		define( 'PIWIKTRACKING_VERSION', '1.0' );
 
 		/* Include plugin functions */
-		require_once (PIWIKTRACKING_DIR . 'piwik-tracking_functions.php');
+		require_once (PIWIKTRACKING_DIR . 'piwiktracking_functions.php');
 
 		/* Include settings page /*/
 		if ( is_admin( ) ) {
-			require_once (PIWIKTRACKING_DIR . 'piwik-tracking_settings.php');
+			require_once (PIWIKTRACKING_DIR . 'piwiktracking_settings.php');
 
 			add_filter( 'plugin_action_links', array(
 				&$this,
@@ -59,7 +59,7 @@ class PiwikTracking {
 
 	function piwiktracking_plugin_action_links($links, $file) {
 
-		if ( $file == plugin_basename( dirname( __FILE__ ) . '/piwik-tracking.php' ) ) {
+		if ( $file == plugin_basename( dirname( __FILE__ ) . '/piwiktracking.php' ) ) {
 			$links[] = '<a href="options-general.php?page=piwiktracking-settings-page">' . __( 'Settings' ) . '</a>';
 		}
 		return $links;
