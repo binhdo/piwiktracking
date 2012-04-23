@@ -22,10 +22,10 @@ function piwiktracking_functions_setup() {
 			foreach ( $roles_set as $role => $name ) {
 				if ( current_user_can( $role ) && ! $roles_set[$role] == 1 ) {
 					switch( piwiktracking_get_option( 'trackingmode' ) ) {
-						case 'standard':
+						case 'standard' :
 							add_action( 'wp_footer', 'piwiktracking_standard_tracking' );
 							break;
-						case 'async':
+						case 'async' :
 							add_action( 'wp_head', 'piwiktracking_async_tracking' );
 							break;
 					}
@@ -33,10 +33,10 @@ function piwiktracking_functions_setup() {
 			}
 	} else {
 		switch (piwiktracking_get_option( 'trackingmode')) {
-			case 'standard':
+			case 'standard' :
 				add_action( 'wp_footer', 'piwiktracking_standard_tracking' );
 				break;
-			case 'async':
+			case 'async' :
 				add_action( 'wp_head', 'piwiktracking_async_tracking' );
 				break;
 		}
@@ -97,21 +97,10 @@ function piwiktracking_standard_tracking() {
 	}
 }
 
-function piwiktracking_get_option($option = false) {
-
-	global $piwiktracking;
-
-	if ( ! $option )
-		return false;
-
-	if ( ! isset( $piwiktracking -> settings ) )
-		$piwiktracking -> settings = get_option( 'piwiktracking_settings' );
-
-	if ( ! is_array( $piwiktracking -> settings ) || empty( $piwiktracking -> settings[$option] ) )
-		return false;
-
-	return $piwiktracking -> settings[$option];
-
+function piwiktracking_get_option($option) {
+	$settings = get_option( 'piwiktracking_settings');
+	
+	return $settings[$option];
 }
 
 function piwiktracking_update_settings() {

@@ -126,7 +126,7 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 	$html = $before . "\n";
 
 	switch ($type) {
-		case 'text':
+		case 'text' :
 			if ( isset( $label ) )
 				$html .= "\t" . '<label for="' . $id . '">' . $label . '</label>' . "\n";
 
@@ -135,7 +135,7 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 				$html .= '<span class="description">' . esc_attr( $desc ) . '</span>' . "\n";
 			break;
 
-		case 'checkbox':
+		case 'checkbox' :
 			if ( isset( $label ) )
 				$html .= "\t" . '<label for="' . $id . '">' . $label . '</label>' . "\n";
 			$html .= "\t" . '<input type="checkbox" id="' . $id . '" name="' . $prefix . '[' . $id . ']" value="' . $value . '"' . checked( $value, $field_value, false ) . ' >' . "\n";
@@ -143,7 +143,7 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 				$html .= '<span class="description">' . esc_attr( $desc ) . '</span>' . "\n";
 			break;
 
-		case 'select':
+		case 'select' :
 			if ( isset( $label ) )
 				$html .= "\t" . '<label for="' . $id . '">' . $label . '</label>' . "\n";
 			$html .= "\t" . '<select id="' . $id . '" name="' . $prefix . '[' . $id . ']">';
@@ -155,7 +155,7 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 				$html .= '<span class="description">' . esc_attr( $desc ) . '</span>' . "\n";
 			break;
 
-		default:
+		default :
 			break;
 	}
 
