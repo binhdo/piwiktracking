@@ -1,10 +1,10 @@
 === Piwiktracking ===
 Contributors: binhdo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZM4M7KZUEZML
-Tags: piwik, tracking, analytics, data
+Tags: piwik, tracking, analytics, data, privacy
 Requires at least: 3.3
 Tested up to: 3.4
-Stable tag: 1.0
+Stable tag: 1.1
 
 Adds the Piwik Tracking Code to your WordPress blog.
 
@@ -26,7 +26,7 @@ that you can host it on your own server and retain full control over your data.
 This plugin requires a properly configured, up to date installation of the Piwik Analytics software (tested with 1.6 and higher)
 to work. Please visit the [Piwik website](http://piwik.org "Piwik") for detailed reference on Piwik.
 
-Feel free to visit [my blog](http://binaryhideout.com/piwiktracking-wordpress-plugin/) (...for me to prove this actually works ;))
+Feel free to visit [my blog](http://binaryhideout.com/piwiktracking-wordpress-plugin/)
 
 == Installation ==
 
@@ -43,6 +43,10 @@ Feel free to visit [my blog](http://binaryhideout.com/piwiktracking-wordpress-pl
 2. Piwiktracking Advanced Settings
 
 == Changelog ==
+
+= 1.1 =
+
+* fixing a stupid bug related to standard javascript tracking mode
 
 = 1.0 =
 
