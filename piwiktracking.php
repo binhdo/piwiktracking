@@ -3,7 +3,7 @@
  * Plugin Name: Piwiktracking
  * Plugin URI: http://binaryhideout.com/piwiktracking-wordpress-plugin/
  * Description: Adds the Piwik tracking code to your WordPress blog.
- * Version: 1.0
+ * Version: 1.1
  * Author: M. Dobersalsky
  * Author URI: http://binaryhideout.com
  * License: GPLv2 or later
@@ -26,7 +26,7 @@ class PiwikTracking {
 		/* Plugin constants */
 		define( 'PIWIKTRACKING_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 		define( 'PIWIKTRACKING_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
-		define( 'PIWIKTRACKING_VERSION', '1.0' );
+		define( 'PIWIKTRACKING_VERSION', '1.1' );
 
 		/* Include plugin functions */
 		require_once (PIWIKTRACKING_DIR . 'piwiktracking_functions.php');

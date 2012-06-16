@@ -79,7 +79,7 @@ function piwiktracking_standard_tracking() {
 	if ( $piwik_url && $site_id ) {
 		$output = '<!-- Piwik Standard-->' . "\n";
 		$output .= '<script type="text/javascript">' . "\n";
-		$output .= "\t" . "var pkBaseURL = (('https:' == document.location.protocol) ? 'https://') + '" . $piwik_url . "';" . "\n";
+		$output .= "\t" . "var pkBaseURL = (('https:' == document.location.protocol) ? 'https://' : 'http://') + '" . $piwik_url . "';" . "\n";
 		$output .= "\t" . 'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));' . "\n";
 		$output .= '</script>' . "\n";
 		$output .= '<script type="text/javascript">' . "\n";
@@ -98,32 +98,28 @@ function piwiktracking_standard_tracking() {
 }
 
 function piwiktracking_get_option($option) {
-	$settings = get_option( 'piwiktracking_settings');
-	
+	$settings = get_option( 'piwiktracking_settings' );
+
+	if ( ! is_array( $settings ) || ! array_key_exists( $option, $settings ) )
+		return false;
+
 	return $settings[$option];
 }
 
 function piwiktracking_update_settings() {
-
-	/* Get the settings from the database. */
 	$settings = get_option( 'piwiktracking_settings' );
-	/* Get the default plugin settings. */
 	$default_settings = piwiktracking_get_default_settings( );
-	/* Loop through each of the default plugin settings. */
+	$settings['version'] = PIWIKTRACKING_VERSION;
+	
 	foreach ( $default_settings as $setting_key => $setting_value ) {
-		/* If the setting didn't previously exist, add the default value to the $settings array. */
 		if ( ! isset( $settings[$setting_key] ) )
 			$settings[$setting_key] = $setting_value;
 	}
-	$settings['version'] = PIWIKTRACKING_VERSION;
-	/* Update the plugin settings. */
+	
 	update_option( 'piwiktracking_settings', $settings );
-
 }
 
 function piwiktracking_get_default_settings() {
-
-	// preg_replace( "/^https?:\/\/(.+)$/i", "\\1", site_url( '/piwik/' ) )
 
 	$settings = array(
 		'version' => PIWIKTRACKING_VERSION,
@@ -134,6 +130,5 @@ function piwiktracking_get_default_settings() {
 	);
 
 	return $settings;
-
 }
 ?>

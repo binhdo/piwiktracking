@@ -92,9 +92,7 @@ function piwiktracking_section_advanced() {
 	$html = '<div id="piwiktracking-settings-advanced" class="piwiktracking-section">' . "\n";
 	$html .= '<h3>' . __( 'Select user groups to exclude from being tracked:', 'piwiktracking' ) . '</h3>' . "\n";
 
-	$prefix = 'piwiktracking_settings[excludedroles]';
 	$roles_set = piwiktracking_get_option( 'excludedroles' );
-	$value = true;
 
 	$html .= '<p>' . "\n";
 	$html .= '<label for="select-all">' . __( 'Select / deselect all', 'piwiktracking' ) . '</label>' . "\n";
@@ -102,11 +100,15 @@ function piwiktracking_section_advanced() {
 	$html .= '</p>' . "\n";
 
 	$html .= '<fieldset id="user-roles">' . "\n";
+
 	foreach ( $piwiktracking->roles_available as $role => $name ) {
-		$html .= '<p>' . "\n";
-		$html .= '<input type="checkbox" id="' . $role . '" name="' . $prefix . '[' . $role . ']" value="' . $value . '"' . checked( $value, $roles_set[$role], false ) . ' >' . "\n";
-		$html .= "\t" . '<label for="' . $role . '">' . $name . '</label>' . "\n";
-		$html .= '</p>' . "\n";
+		$html .= piwiktracking_create_setting( array(
+			'groupid' => 'excludedroles',
+			'id' => $role,
+			'type' => 'checkbox',
+			'value' => true,
+			'label' => $name
+		) );
 	}
 	$html .= '</fieldset>' . "\n";
 
@@ -120,8 +122,10 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 
 	extract( $args );
 
-	$field_value = piwiktracking_get_option( $id );
+	$settings_field = isset( $groupid ) ? piwiktracking_get_option( $groupid ) : piwiktracking_get_option( $id );
+	$field_value = isset( $groupid ) ? $settings_field[$id] : $settings_field;
 	$prefix = 'piwiktracking_settings';
+	$setting_id = isset( $groupid ) ? $prefix . '[' . $groupid . '][' . $id . ']' : $prefix . '[' . $id . ']';
 
 	$html = $before . "\n";
 
@@ -130,7 +134,7 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 			if ( isset( $label ) )
 				$html .= "\t" . '<label for="' . $id . '">' . $label . '</label>' . "\n";
 
-			$html .= "\t" . '<input type="text" id="' . $id . '" name="' . $prefix . '[' . $id . ']" class="' . $class . '" value="' . esc_attr( $field_value ) . '" >' . "\n";
+			$html .= "\t" . '<input type="text" id="' . $id . '" name="' . $setting_id . '" class="' . $class . '" value="' . esc_attr( $field_value ) . '" >' . "\n";
 			if ( isset( $desc ) )
 				$html .= '<span class="description">' . esc_attr( $desc ) . '</span>' . "\n";
 			break;
@@ -138,7 +142,7 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 		case 'checkbox' :
 			if ( isset( $label ) )
 				$html .= "\t" . '<label for="' . $id . '">' . $label . '</label>' . "\n";
-			$html .= "\t" . '<input type="checkbox" id="' . $id . '" name="' . $prefix . '[' . $id . ']" value="' . $value . '"' . checked( $value, $field_value, false ) . ' >' . "\n";
+			$html .= "\t" . '<input type="checkbox" id="' . $id . '" name="' . $setting_id . '" value="' . $value . '"' . checked( $value, $field_value, false ) . ' >' . "\n";
 			if ( isset( $desc ) )
 				$html .= '<span class="description">' . esc_attr( $desc ) . '</span>' . "\n";
 			break;
@@ -146,7 +150,7 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 		case 'select' :
 			if ( isset( $label ) )
 				$html .= "\t" . '<label for="' . $id . '">' . $label . '</label>' . "\n";
-			$html .= "\t" . '<select id="' . $id . '" name="' . $prefix . '[' . $id . ']">';
+			$html .= "\t" . '<select id="' . $id . '" name="' . $setting_id . '">';
 			foreach ( $options as $value => $name ) {
 				$html .= "\t\t" . '<option value="' . esc_attr( $value ) . '"' . selected( $value, $field_value, false ) . '>' . esc_attr( $name ) . '</option>' . "\n";
 			}
@@ -210,12 +214,12 @@ function piwiktracking_validate_settings($input) {
 
 	$settings['linktracking'] = isset( $input['linktracking'] ) ? true : false;
 
-	foreach ( $piwiktracking -> roles_available as $role => $name ) {
-		$settings['excludedroles'][$role] = isset( $input['excludedroles'][$role] ) ? true : false;
-	}
-
 	if ( array_key_exists( $input['trackingmode'], $piwiktracking -> trackingmodes ) ) {
 		$settings['trackingmode'] = $input['trackingmode'];
+	}
+
+	foreach ( $piwiktracking -> roles_available as $role => $name ) {
+		$settings['excludedroles'][$role] = isset( $input['excludedroles'][$role] ) ? true : false;
 	}
 
 	return $settings;
