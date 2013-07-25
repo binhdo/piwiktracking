@@ -3,8 +3,8 @@ Contributors: binhdo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZM4M7KZUEZML
 Tags: piwik, tracking, analytics, data, privacy
 Requires at least: 3.3
-Tested up to: 3.4
-Stable tag: 1.0
+Tested up to: 3.6
+Stable tag: 1.2.1
 
 Adds the Piwik Tracking Code to your WordPress blog.
 
@@ -18,15 +18,18 @@ that you can host it on your own server and retain full control over your data.
 = Features =
 
 * Set the Piwik Base URL and the corresponding SiteID on the settings page
-* Choose between the standard javascript tracker or the modern asynchronous tracker (recommended to improve page loading time)
+* asynchronous javascript tracking (recommended to improve page loading time)
 * Enable or disable download & outlink tracking
+* tracking across subdomains
+* enable / disable client side DoNotTrack detection
 * Advanced settings: select user groups (identified by roles) to exclude from being tracked
 
 = Requirements = 
-This plugin requires a properly configured, up to date installation of the Piwik Analytics software (tested with 1.6 and higher)
-to work. Please visit the [Piwik website](http://piwik.org "Piwik") for detailed reference on Piwik.
+This plugin requires a properly configured, up to date installation of the Piwik Analytics software
+to work (tested with 1.6 and higher).
+Please visit the [Piwik website](http://piwik.org "Piwik") for detailed reference on Piwik.
 
-Feel free to visit [my blog](http://binaryhideout.com/piwiktracking-wordpress-plugin/)
+[Visit plugin page](http://binaryhideout.com/piwiktracking-wordpress-plugin/)
 
 == Installation ==
 
@@ -43,6 +46,16 @@ Feel free to visit [my blog](http://binaryhideout.com/piwiktracking-wordpress-pl
 2. Piwiktracking Advanced Settings
 
 == Changelog ==
+
+= 1.2 =
+
+* remove tracking mode selection
+* use asynchronous javascript by default (utilising wp_footer hook)
+* add prepend site domain option
+* add subdomain tracking
+* add hide alias clicks option
+* add client side DoNotTrack option
+* resulting tracking code in line with Piwik v 1.12 settings
 
 = 1.1 =
 

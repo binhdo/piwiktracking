@@ -2,10 +2,15 @@
  * Piwiktracking Admin stylesheet
  */
 .piwiktracking-settings label {
-	display: block;
 	float: left;
 	width: 200px;
 	margin-right: 10px;
+}
+.piwiktracking-settings .settings-row {
+	display: block;
+	clear: both;
+	padding: 10px;
+	margin: 10px 0;
 }
 ul.ui-tabs-nav {
 	margin: 0;

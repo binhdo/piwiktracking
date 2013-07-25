@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Piwiktracking plugin settings
  */
@@ -10,23 +11,18 @@ function piwiktracking_settings_page_setup() {
 	global $piwiktracking;
 	global $wp_roles;
 
-	$piwiktracking -> trackingmodes = array(
-		'standard' => 'Standard javascript tracking',
-		'async' => 'Asynchronous javascript tracking'
-	);
-	$piwiktracking -> roles_available = $wp_roles -> get_names( );
+	$piwiktracking->roles_available = $wp_roles->get_names();
 
 	/* add_options_page( $page_title, $menu_title, $capability, $menu_slug, $funtion ); */
-	$piwiktracking -> settings_page = add_options_page( 'Piwiktracking Settings', 'Piwiktracking', 'manage_options', 'piwiktracking-settings-page', 'piwiktracking_display_settings_page' );
+	$piwiktracking->settings_page = add_options_page( 'Piwiktracking Settings', 'Piwiktracking', 'manage_options', 'piwiktracking-settings-page', 'piwiktracking_display_settings_page' );
 
 	add_action( 'admin_init', 'piwiktracking_register_settings' );
 
-	add_action( 'load-' . $piwiktracking -> settings_page, 'piwiktracking_settings_sections' );
+	add_action( 'load-' . $piwiktracking->settings_page, 'piwiktracking_settings_sections' );
 
 	/* Admin scripts & Styles */
-	add_action( 'admin_print_scripts-' . $piwiktracking -> settings_page, 'piwiktracking_admin_scripts' );
-	add_action( 'admin_print_styles-' . $piwiktracking -> settings_page, 'piwiktracking_admin_styles' );
-
+	add_action( 'admin_print_scripts-' . $piwiktracking->settings_page, 'piwiktracking_admin_scripts' );
+	add_action( 'admin_print_styles-' . $piwiktracking->settings_page, 'piwiktracking_admin_styles' );
 }
 
 function piwiktracking_register_settings() {
@@ -41,7 +37,6 @@ function piwiktracking_settings_sections() {
 	add_settings_section( 'basic_settings', false, 'piwiktracking_section_basic', 'piwiktracking-settings-page' );
 
 	add_settings_section( 'advanced_settings', false, 'piwiktracking_section_advanced', 'piwiktracking-settings-page' );
-
 }
 
 function piwiktracking_section_basic() {
@@ -57,32 +52,54 @@ function piwiktracking_section_basic() {
 		'class' => 'regular-text',
 		'label' => __( 'Piwik Base URL', 'piwiktracking' ),
 		'desc' => __( 'the base URL to your Piwik installation (without http(s)://)', 'piwiktracking' )
-	) );
+			) );
 
 	$html .= piwiktracking_create_setting( array(
 		'id' => 'siteid',
 		'type' => 'text',
 		'class' => 'small-text',
 		'label' => __( 'Your Piwik SiteID', 'piwiktracking' )
-	) );
-
-	$html .= piwiktracking_create_setting( array(
-		'id' => 'trackingmode',
-		'type' => 'select',
-		'label' => __( 'Select Tracking Mode', 'piwiktracking' ),
-		'options' => $piwiktracking -> trackingmodes
-	) );
+			) );
 
 	$html .= piwiktracking_create_setting( array(
 		'id' => 'linktracking',
 		'type' => 'checkbox',
 		'value' => true,
 		'label' => __( 'Enable outlink & downloads tracking', 'piwiktracking' )
-	) );
+			) );
+
+	$html .= piwiktracking_create_setting( array(
+		'id' => 'subdomaintracking',
+		'type' => 'checkbox',
+		'value' => true,
+		'label' => __( 'Track visitors across all subdomains of ' . piwiktracking_get_domain(), 'piwiktracking' )
+			) );
+
+	$html .= piwiktracking_create_setting( array(
+		'id' => 'prependsitedomain',
+		'type' => 'checkbox',
+		'value' => true,
+		'label' => __( 'Prepend the site domain to the page title when tracking', 'piwiktracking' )
+			) );
+
+	$html .= piwiktracking_create_setting( array(
+		'id' => 'hidealiasclicks',
+		'type' => 'checkbox',
+		'value' => true,
+		'label' => __( 'In the "Outlinks" report, hide clicks to known alias URLs', 'piwiktracking' )
+			) );
+
+	$html .= piwiktracking_create_setting( array(
+		'id' => 'clientsidednt',
+		'type' => 'checkbox',
+		'value' => true,
+		'label' => __( 'Enable client side DoNotTrack detection', 'piwiktracking' )
+			) );
+
+
 	$html .= '</div>' . "\n";
 
 	echo $html;
-
 }
 
 function piwiktracking_section_advanced() {
@@ -94,10 +111,10 @@ function piwiktracking_section_advanced() {
 
 	$roles_set = piwiktracking_get_option( 'excludedroles' );
 
-	$html .= '<p>' . "\n";
+	$html .= '<div class="settings-row">' . "\n";
 	$html .= '<label for="select-all">' . __( 'Select / deselect all', 'piwiktracking' ) . '</label>' . "\n";
 	$html .= '<input id="select-all" type="checkbox">' . "\n";
-	$html .= '</p>' . "\n";
+	$html .= '</div>' . "\n";
 
 	$html .= '<fieldset id="user-roles">' . "\n";
 
@@ -108,17 +125,16 @@ function piwiktracking_section_advanced() {
 			'type' => 'checkbox',
 			'value' => true,
 			'label' => $name
-		) );
+				) );
 	}
 	$html .= '</fieldset>' . "\n";
 
 	$html .= '</div>' . "\n";
 
 	echo $html;
-
 }
 
-function piwiktracking_create_setting($args = array(), $before = '<p>', $after = '</p>') {
+function piwiktracking_create_setting($args = array(), $before = '<div class="settings-row">', $after = '</div>') {
 
 	extract( $args );
 
@@ -129,7 +145,7 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 
 	$html = $before . "\n";
 
-	switch ($type) {
+	switch ( $type ) {
 		case 'text' :
 			if ( isset( $label ) )
 				$html .= "\t" . '<label for="' . $id . '">' . $label . '</label>' . "\n";
@@ -166,18 +182,17 @@ function piwiktracking_create_setting($args = array(), $before = '<p>', $after =
 	$html .= $after . "\n";
 
 	return $html;
-
 }
 
 function piwiktracking_display_settings_page() {
 
 	echo '<div class="wrap piwiktracking-settings-page">' . "\n";
 
-	screen_icon( );
+	screen_icon();
 
 	echo '<h2>' . __( 'Piwiktracking Settings', 'piwiktracking' ) . '</h2>' . "\n";
 
-	settings_errors( );
+	//settings_errors();
 
 	echo '<form class="piwiktracking-settings" method="post" action="options.php">' . "\n";
 
@@ -193,13 +208,12 @@ function piwiktracking_display_settings_page() {
 
 	do_settings_sections( $_GET['page'] );
 
-	submit_button( esc_attr__( 'Update Settings' ) );
+	submit_button( esc_attr__( 'Update Settings', 'piwiktracking' ) );
 
 	echo '</div>' . "\n";
 
 	echo '</form>' . "\n";
 	echo '</div>' . "\n";
-
 }
 
 function piwiktracking_validate_settings($input) {
@@ -210,33 +224,33 @@ function piwiktracking_validate_settings($input) {
 
 	$settings['siteid'] = is_numeric( $input['siteid'] ) ? intval( $input['siteid'] ) : '';
 
-	$checkbox_options = array( 'linktracking' );
+	$checkbox_options = array(
+		'linktracking',
+		'subdomaintracking',
+		'prependsitedomain',
+		'hidealiasclicks',
+		'clientsidednt'
+	);
 
-	$settings['linktracking'] = isset( $input['linktracking'] ) ? true : false;
-
-	if ( array_key_exists( $input['trackingmode'], $piwiktracking -> trackingmodes ) ) {
-		$settings['trackingmode'] = $input['trackingmode'];
+	foreach ( $checkbox_options as $checkbox_option ) {
+		$settings[$checkbox_option] = isset( $input[$checkbox_option] ) ? true : false;
 	}
 
-	foreach ( $piwiktracking -> roles_available as $role => $name ) {
+	foreach ( $piwiktracking->roles_available as $role => $name ) {
 		$settings['excludedroles'][$role] = isset( $input['excludedroles'][$role] ) ? true : false;
 	}
 
 	return $settings;
-
 }
 
 function piwiktracking_admin_scripts() {
 
 	//wp_enqueue_script( 'jquery-cookie', PIWIKTRACKING_URI . 'js/jquery.cookie.js', array( 'jquery' ) );
 	wp_print_scripts( 'jquery-ui-tabs' );
-	wp_enqueue_script( 'piwiktracking-admin-functions', PIWIKTRACKING_URI . 'js/admin-script.js', array( 'jquery' ), '1.0' );
-
+	wp_enqueue_script( 'piwiktracking-admin-functions', PIWIKTRACKING_URI . 'js/admin-script.js', array('jquery'), '1.2' );
 }
 
 function piwiktracking_admin_styles() {
 
-	wp_enqueue_style( 'piwiktracking-style', PIWIKTRACKING_URI . 'css/admin-style.css', false, '1.0' );
-
+	wp_enqueue_style( 'piwiktracking-style', PIWIKTRACKING_URI . 'css/admin-style.css', false, '1.2' );
 }
-?>
